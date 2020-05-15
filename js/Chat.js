@@ -2,19 +2,23 @@ import React, { useState, useEffect } from 'react';
 import Clock from './Clock'
 
 const Chat = () => {
-    const chatUrl = 'http://localhost:3000/chat';
-    const usersUrl = 'http://localhost:3000/users';
-    const logsUrl = 'http://localhost:3000/logs';
-    const admin = "SCORPIONIKR ";
+    const chatUrl = 'http://192.168.0.13:5000/chat';
+    const usersUrl = 'http://192.168.0.13:5000/users';
+    const logsUrl = 'http://192.168.0.13:5000/logs';
+    const admin = "SCORPIONIKR";
+    const adminPassword = "Skarbus";
     const tableofcolors = ["black", "darkblue", "green", "blue", "orange", "violet"];
     const [messages, setMessages] = useState([]);
+    const [isnewmessages, setIsNew] = useState(false);
     const [users, setUsers] = useState([]);
     const [errors, setErrors] = useState([]);
     const [eventMessage, setEventMessage] = useState([]);
     const [login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
     const [logged, setLogged] = useState(false);
     const [newMessage, setNewMessage] = useState("");
     const [date, setdate] = useState(new Date())
+    const loggedOutMessage = login.toUpperCase()+ ' Wylogowany przez Admin!'
 
     //Do uzycia przy kodzie MOBILE=================================================
     // const hamburger = () => {
@@ -46,9 +50,10 @@ const Chat = () => {
             fetchMessages()
             fetchEvents()
         }, 1000)
+        // scrollToBottom(messages)
         return() => {  clearInterval(timerId);    }
-
     }, []);
+
 
     const fetchUsers = () => {
         fetch(usersUrl)
@@ -76,14 +81,8 @@ const Chat = () => {
         setdate(new Date())
     }
 
-    const scrollToBottom = () => {
-        // let firstTime = true;
-        // if (firstTime) {
+    const scrollToBottom = (messages) => {
             messages.scrollTop = messages.scrollHeight;
-        //     firstTime = false;
-        // } else if (messages.scrollTop + messages.clientHeight === messages.scrollHeight) {
-        //     messages.scrollTop = messages.scrollHeight;
-        // }
     }
 
     const addMessage = () => {
@@ -130,6 +129,10 @@ const Chat = () => {
         setLogin(e.target.value);
     }
 
+    const handlePasswordChange = e => {
+        setPassword(e.target.value);
+    }
+
     const colorrandom = (array) =>{
         return array[Math.floor(Math.random()*array.length)];
     }
@@ -153,6 +156,7 @@ const Chat = () => {
             setLogged(true)
             addUser();
             addLogs(login.toUpperCase() + ' zalogował się!')
+            setErrors([])
         }
     }
 
@@ -160,6 +164,11 @@ const Chat = () => {
         const validationErrors = [];
         if (!login || login.length <= 2) {
             validationErrors.push('Login powinien zawierać więcej niż 2 znaki!')
+        }
+        if (login.toUpperCase() ==admin) {
+            if (!password || password.length <= 2 || password != adminPassword) {
+                validationErrors.push('hasło niepoprawne!')
+            }
         }
         users.forEach(user => {
             if (user.name == login.toLocaleUpperCase()) {
@@ -174,6 +183,7 @@ const Chat = () => {
         let logincolor = ""
         if (login.toLocaleUpperCase()== admin) {
             logincolor = "red"
+            setPassword("")
         } else {
             logincolor = colorrandom(tableofcolors)
         }
@@ -254,11 +264,13 @@ const Chat = () => {
         addLogs(username+ ' wylogował się!')
     }
 
+
     //Funkcje administracyjne ======================================================
 
     const AdminUsunUser = (userId, username) => {
         userDel(userId);
         addLogs(username+ ' Wylogowany przez Admin!')
+        // setErrors(["Zostałeś wyrzucony z chat!"])
     }
 
     const AdminClearChat = () => {
@@ -297,8 +309,10 @@ const Chat = () => {
         return (
             <div className="loginPage container pr-30 pl-30">
                 <form className="loginForm" onSubmit={handleLogin}>
+                    <h1>CHAT</h1>
                     <label>Podaj swoje imię:</label>
                     <input type="text" name="login" value={login} onChange={handleLoginChange} />
+                    {login.toUpperCase() == admin ? <input type="password" name="password" value={password} onChange={handlePasswordChange} />: ""}
                     <button type="submit">Zaloguj!</button>
                     <ul className="alert">
                         {errors.map((error, index) => {
@@ -360,20 +374,19 @@ const Chat = () => {
                                     <button type="submit" className="btn-send">Wyślij</button>
                                     {login.toUpperCase() == admin ? <button className="AdminButton" onClick={AdminClearChat}>Wyczyść</button> : ""}
                           </form>
-                        {eventMessage.length >0 ? <div className="EventM center">{eventMessage[eventMessage.length-1].message}</div> : ""}
+                        {eventMessage[eventMessage.length-1].message == loggedOutMessage ? setLogged(false) :<div className="EventM center">{eventMessage[eventMessage.length-1].message}</div>}
                     </div>
                 </main>
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span> Chat ver. 1.0</span>
+                        <span>Chat ver. 2.0</span>
                         <span>Copyright: ScorpionikR</span>
                     </div>
                 </footer>
             </>
         );
     }
-
 };
 
 export default Chat;
