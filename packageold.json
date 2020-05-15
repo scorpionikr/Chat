@@ -1,0 +1,41 @@
+{
+  "name": "Chat",
+  "version": "1.0.0",
+  "description": "Chat",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --hot -d",
+    "build": "webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scorpionikr/Chat.git"
+  },
+  "keywords": [],
+  "author": "ScorpionikR",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "https://github.com/scorpionikr/Chat#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.5.3",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "dependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "whatwg-fetch": "^3.0.0"
+  }
+}

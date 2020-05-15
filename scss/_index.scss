@@ -1,0 +1,226 @@
+// Nawigacja
+
+body {
+  background-color: $orangeColor;
+}
+
+.logo {
+  width: 30%;
+  color: $whiteColor;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.header {
+  width: 100vw;
+  height: 10vh;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  //background: $backgroundScreens;
+
+}
+nav > ul {
+  :last-child {
+    padding-right: initial;
+  }
+
+  > li {
+    display: inline-block;
+    padding: 0 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-style: italic;
+    color: $whiteColor;
+    cursor: pointer;
+    }
+  }
+
+.Admin {
+  font-weight: 600;
+  font-size: 1rem;
+  font-style: italic;
+  color: $whiteColor;
+}
+
+//Login
+.loginPage {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loginForm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 2px 3px 6px 10px rgba(0, 0, 0, .13);
+    background-color: white;
+    box-sizing: border-box;
+    border-radius: 5%;
+    height: 70%;
+    width: 45%;
+    max-width: 450px;
+    max-height: 450px;
+    margin: auto;
+    label {
+      font-size:1rem;
+      color: $infoColor;
+      font-weight: 600;
+      padding-bottom: 20px;
+    }
+    button {
+      background-color: $orangeColor;
+      padding: 5px 5px;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    .alert {
+      color: red;
+      font-size: 0.8rem;
+      list-style: none;
+      padding-top: 20px;
+    }
+  }
+}
+
+//main
+
+main {
+  height: 80vh;
+  margin-bottom: 10px;
+}
+
+.section1 {
+  height: 85%;
+  box-shadow: 2px 3px 6px 5px rgba(0, 0, 0, .13);
+  border-radius: 1%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: $whiteColor;
+  .messages {
+    overflow-y: auto;
+    width:77%;
+    height: 100%;
+    ul  {
+      > li {
+        list-style: none;
+        font-size:1rem;
+        margin-top: 10px;
+        padding: 3px;
+        &:nth-of-type(2n) {
+          background:$rowsColors;
+        }
+      }
+      button {
+        background-color: $orangeColor;
+        padding: 5px 5px;
+        color: white;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    }
+    span {
+      color: $infoColor;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  }
+  .users {
+    width: 20%;
+    height: 100%;
+    border-left: solid $orangeColor 2px;
+    color: $infoColor;
+    font-weight: 600;
+    font-size: 1rem;
+    overflow-y: auto;
+    ul  {
+      > li {
+        list-style: none;
+        font-size:1rem;
+        margin-top: 10px;
+        padding: 3px;
+      }
+      button {
+        background-color: $orangeColor;
+        padding: 5px 5px;
+        color: white;
+        font-size: 1rem;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    }
+  }
+
+}
+
+.section2 {
+  height: 13%;
+  width: 100%;
+  box-shadow: 2px 3px 6px 5px rgba(0, 0, 0, .13);
+  border-radius: 1%;
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $whiteColor;
+  .sendForm {
+    height: 100%;
+    width: 77%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    input {
+      width: 75%
+    }
+    p {
+      color:$infoColor;
+      font-weight: 600;
+    }
+    button {
+      background-color: $orangeColor;
+      padding: 5px 5px;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+  }
+  .EventM {
+    color: $infoColor;
+    font-size: 1rem;
+    width: 20%;
+    text-align: center;
+  }
+}
+
+footer {
+  height: 7vh;
+  padding-top: 10px;
+  //width: 100vw;
+  //box-shadow: 0px -5px 20px rgba(50, 50, 50, 0.08);
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-style: italic;
+    color: $whiteColor;
+  }
+}
+

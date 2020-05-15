@@ -1,0 +1,28 @@
+$gutter: 12px;
+$columns: 12;
+
+.row {
+  width: 100%;
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+[class*="col-"] {
+  float: left;
+  padding: 0 $gutter;
+  min-height: 1px;
+}
+
+
+@for $i from 1 through $columns {
+  .container .row .col-#{$i} {
+    width: 100 / $columns * $i * 1%;
+  }
+}
+.hidden{
+  display: none;
+}

@@ -1,0 +1,67 @@
+{
+  "winners": [],
+  "chat": [],
+  "users": [],
+  "logs": [
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 1
+    },
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 2
+    },
+    {
+      "message": "RAFAL wylogował się!",
+      "id": 3
+    },
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 4
+    },
+    {
+      "message": "RAFAL wylogował się!",
+      "id": 5
+    },
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 6
+    },
+    {
+      "message": "RAFAL wylogował się!",
+      "id": 7
+    },
+    {
+      "message": "SCORPIONIKR  zalogował się!",
+      "id": 8
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 9
+    },
+    {
+      "message": "Admin usunął tą wiadomość!",
+      "id": 10
+    },
+    {
+      "message": "SCORPIONIKR  wylogował się!",
+      "id": 11
+    },
+    {
+      "message": "USER zalogował się!",
+      "id": 12
+    },
+    {
+      "message": "USER wylogował się!",
+      "id": 13
+    },
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 14
+    },
+    {
+      "message": "RAFAL wylogował się!",
+      "id": 15
+    }
+  ]
+}
