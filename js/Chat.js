@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Clock from './Clock'
 
 const Chat = () => {
-    const chatUrl = 'http://192.168.0.13:5000/chat';
-    const usersUrl = 'http://192.168.0.13:5000/users';
-    const logsUrl = 'http://192.168.0.13:5000/logs';
+    const chatUrl = 'https://jsonsscorpionikr.herokuapp.com/chat';
+    const usersUrl = 'https://jsonsscorpionikr.herokuapp.com/users';
+    const logsUrl = 'https://jsonsscorpionikr.herokuapp.com/logs';
     const admin = "SCORPIONIKR";
     const adminPassword = "Skarbus";
     const tableofcolors = ["black", "darkblue", "green", "blue", "orange", "violet"];
@@ -19,6 +19,9 @@ const Chat = () => {
     const [newMessage, setNewMessage] = useState("");
     const [date, setdate] = useState(new Date())
     const loggedOutMessage = login.toUpperCase()+ ' Wylogowany przez Admin!'
+    const liRref = useRef();
+
+
 
     //Do uzycia przy kodzie MOBILE=================================================
     // const hamburger = () => {
@@ -49,10 +52,17 @@ const Chat = () => {
             fetchUsers();
             fetchMessages()
             fetchEvents()
+            scrollToBottom()
         }, 1000)
-        // scrollToBottom(messages)
+
         return() => {  clearInterval(timerId);    }
-    }, []);
+    }, [logged]);
+
+    const scrollToBottom = () => {
+        if (logged == true) {
+            liRref.current.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
 
 
     const fetchUsers = () => {
@@ -81,10 +91,6 @@ const Chat = () => {
         setdate(new Date())
     }
 
-    const scrollToBottom = (messages) => {
-            messages.scrollTop = messages.scrollHeight;
-    }
-
     const addMessage = () => {
         const url = chatUrl;
         currentTime()
@@ -107,6 +113,7 @@ const Chat = () => {
         }).then(dataNew => {
             console.log(dataNew);
             setMessages(prevtable => [...prevtable, dataNew]);
+            liRref.current.scrollIntoView({ behavior: 'smooth' });
         })
             .catch(error => {
                 console.log(error);
@@ -350,7 +357,7 @@ const Chat = () => {
                                 <ul >
                                     {messages.map((message) => {
                                         return (
-                                            <li key={message.id} style={{color: message.color}}>{message.name.toLocaleUpperCase()} [{message.time}]: {message.message} {login.toUpperCase() == admin ? <button className="AdminButton" onClick={() => AdminUsunMessage(message.id)}>Usuń</button> : ""}</li>
+                                            <li ref={liRref} key={message.id} style={{color: message.color}}>{message.name.toLocaleUpperCase()} [{message.time}]: {message.message} {login.toUpperCase() == admin ? <button className="AdminButton" onClick={() => AdminUsunMessage(message.id)}>Usuń</button> : ""}</li>
                                         )
                                     })}
                                 </ul>
@@ -380,7 +387,7 @@ const Chat = () => {
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 2.0</span>
+                        <span>Chat ver. 3.0</span>
                         <span>Copyright: ScorpionikR</span>
                     </div>
                 </footer>

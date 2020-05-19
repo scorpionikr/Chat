@@ -1,14 +1,131 @@
 {
-  "winners": [
-
-  ],
+  "winners": [],
   "chat": [
-
+    {
+      "name": "SCORPIONIKR",
+      "message": "helo",
+      "color": "red",
+      "time": "3:51:53 PM",
+      "id": 1
+    }
   ],
-  "users": [
-
-  ],
+  "users": [],
   "logs": [
-
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 1
+    },
+    {
+      "message": "RAFALEK zalogował się!",
+      "id": 2
+    },
+    {
+      "message": "QWE zalogował się!",
+      "id": 3
+    },
+    {
+      "message": "QWE wylogował się!",
+      "id": 4
+    },
+    {
+      "message": "RAFALEK wylogował się!",
+      "id": 5
+    },
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 6
+    },
+    {
+      "message": "RAFAL wylogował się!",
+      "id": 7
+    },
+    {
+      "message": "SCORPIONIKR zalogował się!",
+      "id": 8
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 9
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 10
+    },
+    {
+      "message": "Admin usunął tą wiadomość!",
+      "id": 11
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 12
+    },
+    {
+      "message": "SCORPIONIKR wylogował się!",
+      "id": 13
+    },
+    {
+      "message": "BUZI zalogował się!",
+      "id": 14
+    },
+    {
+      "message": "BUZI wylogował się!",
+      "id": 15
+    },
+    {
+      "message": "BUZI zalogował się!",
+      "id": 16
+    },
+    {
+      "message": "BUZI wylogował się!",
+      "id": 17
+    },
+    {
+      "message": "SCORPIONIKR zalogował się!",
+      "id": 18
+    },
+    {
+      "message": "Admin usunął tą wiadomość!",
+      "id": 19
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 20
+    },
+    {
+      "message": "SCORPIONIKR wylogował się!",
+      "id": 21
+    },
+    {
+      "message": "HENRY zalogował się!",
+      "id": 22
+    },
+    {
+      "message": "HENRY wylogował się!",
+      "id": 23
+    },
+    {
+      "message": "SCORPIONIKR zalogował się!",
+      "id": 24
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 25
+    },
+    {
+      "message": "Admin wyczyścił chat!",
+      "id": 26
+    },
+    {
+      "message": "SCORPIONIKR wylogował się!",
+      "id": 27
+    },
+    {
+      "message": "WARA zalogował się!",
+      "id": 28
+    },
+    {
+      "message": "WARA wylogował się!",
+      "id": 29
+    }
   ]
 }

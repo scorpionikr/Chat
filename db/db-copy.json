@@ -9,6 +9,9 @@
 
   ],
   "logs": [
-
+    {
+      "message": "RAFAL zalogował się!",
+      "id": 1
+    }
   ]
 }
