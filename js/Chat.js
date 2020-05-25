@@ -1,5 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
+import {useMediaQuery, useMediaQueries} from '@react-hook/media-query'
 import Clock from './Clock'
+import LoadingChat from './LoadingChat'
 
 const Chat = () => {
     const chatUrl = 'https://jsonsscorpionikr.herokuapp.com/chat';
@@ -16,34 +18,41 @@ const Chat = () => {
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [logged, setLogged] = useState(false);
+    const [loaded, setloaded] = useState(false);
     const [newMessage, setNewMessage] = useState("");
     const [date, setdate] = useState(new Date())
+    const [isMobile, setisMobile] = useState(false);
+    const [Issmessages, setIssmessages] = useState(true);
+    const [IsUsers, setIsUsers] = useState(false);
     const loggedOutMessage = login.toUpperCase()+ ' Wylogowany przez Admin!'
     const liRref = useRef();
+    const {matches, matchesAny, matchesAll} = useMediaQueries({
+        screen: 'screen',
+        width: '(min-width: 768px)'
+    })
 
+    //Czy strona zaladowana=======================================================
 
+    const siteLoaded = () => {
+        setloaded(true)
+    }
 
-    //Do uzycia przy kodzie MOBILE=================================================
-    // const hamburger = () => {
-        // menu.classList.toggle('visible');
-        // menu.classList.toggle('unvisible');
-    // }
+    // Do uzycia przy kodzie MOBILE=================================================
 
-    // const menu_list = () => {
-    // forEach(function(element) {
-    //         element.addEventListener('click', function(){
-    //             menu.classList.toggle('visible');
-    //             menu.classList.toggle('unvisible');
-    //         });
-    //     });
-    // }
-
-    // const mobile = window.matchMedia("screen and (max-width: 767px)");
-    // mobile.addListener(function(){
-    //     if (mobile.matches) {
-    //         menu.classList.remove('visible');
-    //     }
-    // });
+    const ViewMessage = () => {
+        setIssmessages(true)
+        setIsUsers(false)
+        setisMobile(false)
+    }
+    const ViewUsers = () => {
+        // setIssmessages(false)
+        // setIsUsers(true)
+        // setisMobile(false) narazie to nie dziala
+    }
+    const LogUOut = () => {
+        logOut(login.toLocaleUpperCase())
+        setisMobile(false)
+    }
 
     //chat logika ===================================================================
 
@@ -63,7 +72,6 @@ const Chat = () => {
             liRref.current.scrollIntoView({ behavior: 'smooth' });
         }
     }
-
 
     const fetchUsers = () => {
         fetch(usersUrl)
@@ -312,7 +320,11 @@ const Chat = () => {
 
     //Renderowanie ====================================================
 
-    if (logged === false) {
+    if (loaded === false) {
+        return (
+            <LoadingChat loaded={siteLoaded}/>
+        )
+    } else  if (logged === false)  {
         return (
             <div className="loginPage container pr-30 pl-30">
                 <form className="loginForm" onSubmit={handleLogin}>
@@ -326,6 +338,7 @@ const Chat = () => {
                             return <li key={index}>{error}</li>
                         })}
                     </ul>
+                    {users.length == 0 ? <h3>Brak zalogowanych użytkowników!</h3> : <h3>Zalogowanych {users.length} użytkowników!</h3>}
                 </form>
             </div>
         )
@@ -337,9 +350,9 @@ const Chat = () => {
                     <div className="logo">Chat <Clock/></div>
                     {login.toUpperCase() == admin ? <span className="Admin center">Witaj Admin!</span> : ""}
                     <nav>
-                        <div className="hamburger pr-30">
-                            <button>
-                                <i className="fas fa-bars"></i>
+                        <div className="hamburger" >
+                            <button >
+                                <i className="fas fa-bars" onClick={() => setisMobile(!isMobile)}></i>
                             </button>
                         </div>
                         <ul className="list__navigation unvisible">
@@ -347,12 +360,23 @@ const Chat = () => {
                                 Wyloguj: {login.toLocaleUpperCase()}
                             </li>
                         </ul>
+                        <ul className={isMobile ? 'list__navigation navigation_mobile' : ' unvisible'}>
+                            <li onClick={ViewMessage}>
+                                WIADOMOŚCI
+                            </li>
+                            <li onClick={ViewUsers}>
+                                UŻYTKOWNICY
+                            </li>
+                            <li onClick={LogUOut}>
+                                WYLOGUJ: {login.toLocaleUpperCase()}
+                            </li>
+                        </ul>
                     </nav>
                 </div>
             </header>
                 <main className="container pr-30 pl-30 ">
                     <div className="section1 pt-20">
-                            <div className="messages">
+                            <div className={Issmessages ? ' messages ' : 'unvisible'}>
                                 <span>Wiadomości:</span>
                                 <ul >
                                     {messages.map((message) => {
@@ -362,7 +386,7 @@ const Chat = () => {
                                     })}
                                 </ul>
                             </div>
-                            <div className="users center">
+                            <div className={ matches.screen ? 'users center' : ' unvisible'}>
                                 Użytkownicy:
                                 <ul>
                                     {users.map((user) => {
@@ -376,7 +400,7 @@ const Chat = () => {
                     </div>
                     <div className="section2 pr-30 pl-30 pt-10 pb-10">
                           <form className="sendForm" onSubmit={handleSubmit}>
-                                    <p>Twoja wiadomość:</p>
+                                    <p className="unvisible">Twoja wiadomość:</p>
                                     <input type="text" name="message" value={newMessage} onChange={changeMessage}/>
                                     <button type="submit" className="btn-send">Wyślij</button>
                                     {login.toUpperCase() == admin ? <button className="AdminButton" onClick={AdminClearChat}>Wyczyść</button> : ""}
@@ -387,7 +411,7 @@ const Chat = () => {
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 3.0</span>
+                        <span>Chat ver. 4.0</span>
                         <span>Copyright: ScorpionikR</span>
                     </div>
                 </footer>

@@ -19,6 +19,25 @@
   }
 }
 
+
+@media screen and (max-width: 768px){
+    .section1 .users{
+    display: none;
+    }
+}
+
+.EventM {
+  @media screen and (min-width: 768px){
+    display: block;
+  }
+}
+
+.sendForm p {
+  @media screen and (min-width: 768px){
+    display: block;
+  }
+}
+
 @media screen and (min-width: 768px){
   .hamburger {
     display: none;

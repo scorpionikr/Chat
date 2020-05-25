@@ -1,114 +1,183 @@
-//Nawigacja
+// Nawigacja
 
-.logo {
-  width: 20%;
-  a {
+body {
+  background-color: $orangeColor;
+}
+
+.progress {
+  position: relative;
+  height: 20px;
+  width: 20vw;
+  border: 1px solid $orangeColor;
+  .progress-bar {
 
   }
 }
 
+.logo {
+  width: 40%;
+  font-size: 1.5rem;
+}
+
+.header {
+  width: 100vw;
+  height: 10vh;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  //background: $backgroundScreens;
+
+}
 nav > ul {
+  :last-child {
+    padding-right: initial;
+  }
 
   > li {
     display: inline-block;
-    padding: 0 20px;
-    font-weight: 500;
-    font-size: 0.8rem;
-    :hover{
-      //opacity: 80%;
-      color:$orangeColor;
-    }
+    padding: 0 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    font-style: italic;
+    color: $whiteColor;
+    cursor: pointer;
   }
 }
 
+.Admin {
+  font-weight: 600;
+  font-size: 1rem;
+  font-style: italic;
+  color: $whiteColor;
+}
+
+//Login
+.loginPage {
+
+  .loginForm {
+
+    height: 45%;
+    width: 45%;
+    max-width: 450px;
+    max-height: 450px;
+    margin: auto;
+    h1 {
+      font-size:1.5rem;
+      padding-bottom: 20px;
+    }
+    h2 {
+      font-size:0.8rem;
+      padding-bottom: 20px;
+    }
+    h3 {
+      font-size: 0.8rem;
+      padding-top: 10px;
+    }
+    label {
+      font-size:0.8rem;
+      padding-bottom: 20px;
+    }
+    button {
+
+    }
+    .alert {
+      color: red;
+      font-size: 0.7rem;
+      list-style: none;
+      padding-top: 20px;
+    }
+  }
+}
 
 //main
 
 main {
-
+  height: 70vh;
+  margin-bottom: 10px;
 }
 
 .section1 {
-  .naglowek {
-    font-size: 1.2rem;
-    //padding-top: 120px;
+  height: 85%;
+  padding: 20px;
+  background-color: $whiteColor;
+  .messages {
+    overflow-y: auto;
+    width:77%;
+    height: 100%;
+    ul  {
+      > li {
+        list-style: none;
+        font-size:0.8rem;
+      }
 
+    }
+    span {
+      color: $infoColor;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
   }
+  .users {
+    width: 20%;
+    height: 100%;
+    font-size: 0.9rem;
+    ul  {
+      > li {
+        font-size:0.8rem;
+        margin-top: 10px;
+        padding: 3px;
+      }
+
+    }
+  }
+
 }
 
 .section2 {
+  height: 13%;
+  width: 100%;
 
-  .naglowek {
-    font-size: 1rem;
-     }
-  .section2-box1 {
-    flex-direction: column;
-    align-items: center;
-    div {
-      padding-bottom: 20px;
-      width: 100%;
+  .sendForm {
+    height: 100%;
+    width: 77%;
+    input {
+      width: 70%
+    }
+    p {
+      color:$infoColor;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    button {
+     margin-left: 10px;
     }
 
-    h2 {
-      font-size: 1.3rem;
-    }
-    img {
-      width: 80%;
-    }
   }
-  .section2-box2 {
-   flex-direction: column-reverse;
-    align-items: center;
-    div {
-      width: 100%;
-      padding-bottom: 20px;
-    }
-
-    h2 {
-      font-size: 1.3rem;
-    }
-    img {
-      width: 88%;
-    }
+  .EventM {
+    font-size: 0.8rem;
+    width: 20%;
   }
 }
 
 footer {
-  margin-top: 50px;
-  padding-top: 20px;
-  .footer-content {
-    .contact {
-      color: $darkblueColor;
-      line-height: 1.2rem;
-
-      h3 {
-        font-size: 1rem;
-        font-weight: 500;
-      }
-
-      a {
-        i {
-          font-size: 1rem;
-          padding-right: 5px;
-        }
-      }
+  height: 7vh;
+  padding-top: 10px;
+  //width: 100vw;
+  //box-shadow: 0px -5px 20px rgba(50, 50, 50, 0.08);
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-style: italic;
+    color: $whiteColor;
+    span {
+      font-size: 0.8rem;
     }
-    .slowa {
-      width: 19%;
-      li {
-        font-size: 0.5rem;
-        color: $blueColor;
-      }
-    }
-    .stopka {
-      text-align: left;
-      width:18%;
-      img {
-        width: 70%;
-      }
-    }
-  }
-  .copyright {
-    font-size: 0.8rem;
   }
 }
+

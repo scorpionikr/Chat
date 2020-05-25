@@ -1,210 +1,214 @@
 // Nawigacja
 
-.logo {
-  width: 45%;
+body {
+  background-color: $orangeColor;
+}
 
-  a {
-    img {
-      width: 11rem;
+.progress {
+  position: relative;
+  height: 20px;
+  width: 40vw;
+  border: 1px solid $orangeColor;
+  .progress-bar {
+    span {
+      font-size: 0.7rem;
     }
   }
+}
+
+.logo {
+  width: 55%;
+  font-size: 1rem;
 }
 
 .header {
-
+  width: 100vw;
+  height: 10vh;
 }
 
 .header-content {
-  .hamburger{
-   text-align: right;
-    padding-right: initial;
-    button {
-      cursor: pointer;
-      &:hover{
-        color:$orangeColor;
-      }
-      i {
-        padding: 5px;
-        font-size: 1.5rem;
-        &:active{
-          color:$orangeColor;
-        }
-      }
-    }
-  }
-}
-
-nav > ul {
-  position: fixed;
-  top: 80px;
-  left: 0px;
-  background-color: $whiteColor;
+  display: flex;
+  align-items: center;
+  height: 100%;
   width: 100%;
-  animation-name: updown;
-  animation-duration: 1s;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-  z-index: -1;
+  //background: $backgroundScreens;
+
+}
+nav > ul {
+  :last-child {
+    padding-right: initial;
+  }
+
   > li {
+    display: inline-block;
+    padding: initial;
+    font-weight: 600;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: $whiteColor;
+    cursor: pointer;
+  }
+}
+
+nav .hamburger {
+  i {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: $orangeColor;
+    border: 1px solid $orangeColor;
+  }
+}
+
+.navigation_mobile {
+  position: fixed;
+  background-color: $orangeColor;
+  top: 9vh;
+  left: 0;
+  width: 100%;
+  li {
     display: block;
-    padding: 5px 30px;
-    font-size: 1rem;
+    padding-top: 15px;
+    padding-left: initial;
+    text-align: center;
+  }
+}
 
-    &:hover{
-      //opacity: 80%;
-      color:$orangeColor;
+.Admin {
+  font-weight: 600;
+  font-size: 0.8rem;
+  font-style: italic;
+  color: $whiteColor;
+}
+
+//Login
+.loginPage {
+
+  .loginForm {
+
+    height: 40%;
+    width: 90%;
+    max-width: 450px;
+    max-height: 450px;
+    margin: auto;
+    h1 {
+      font-size:1.5rem;
+      padding-bottom: 20px;
     }
-    a {
-      text-decoration: none;
-      color: $blackColor;
-      &:active{
-        color:$orangeColor;
-      }
+    h2 {
+      font-size:0.8rem;
+      padding-bottom: 20px;
+    }
+    h3 {
+      font-size: 0.8rem;
+      padding-top: 10px;
+    }
+    label {
+      font-size:0.8rem;
+      padding-bottom: 20px;
+    }
+    button {
+
+    }
+    input {
+      width: 80%;
+    }
+    .alert {
+      color: red;
+      font-size: 0.7rem;
+      list-style: none;
+      padding-top: 20px;
+      text-align: center;
     }
   }
 }
-
-@keyframes updown {
-  0% {
-    top: -10%;
-  }
-  100% {
-    top: 80px;
-    //left: 0%;
-  }
-}
-
-.color {
-  color: $orangeColor;
-}
-
 
 //main
 
 main {
-
+  height: 70vh;
+  margin-bottom: 10px;
 }
+
 
 .section1 {
-  .banner {
-    padding: 20px 0;
-  }
-  .naglowek {
-    font-weight: 500;
-    font-size: 1.2rem;
-  }
-}
+  height: 85%;
+  padding: 20px;
+  background-color: $whiteColor;
+  .messages {
+    overflow-y: auto;
+    width:100%;
+    height: 100%;
+    ul  {
+      > li {
+        list-style: none;
+        font-size:0.8rem;
+      }
 
-@keyframes show {
-  0% {
-    //left: 100%;
-    opacity: 0;
+    }
+    span {
+      color: $infoColor;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
   }
-  100% {
-    opacity: 100;
-    //left: 0%;
+  .users {
+    width: 100%;
+    height: 100%;
+    font-size: 0.9rem;
+    border-left: initial;
+    ul  {
+      > li {
+        font-size:0.8rem;
+        margin-top: 10px;
+        padding: 3px;
+      }
+
+    }
   }
+
 }
 
 .section2 {
+  height: 13%;
+  width: 100%;
+  flex-direction: column;
 
-  .naglowek {
-    font-weight: 500;
-    font-size: 1rem;
-    line-height: 1.5rem;
-  }
-  .section2-box1 {
-    padding: 20px;
-    margin-top: 20px;
-    div {
-      width: 100%;
-      text-align: center;
-    }
-    h2 {
-      font-size: 1.2rem;
-    }
-    img {
-      width: 100%;
+  .sendForm {
+    height: 100%;
+    width: 100%;
+    input {
+      width: 70%
     }
     p {
-      padding-top: 20px;
-      line-height: 1.2rem;
-      font-size: 0.9rem;
+      color:$infoColor;
+      font-weight: 600;
+      font-size: 0.8rem;
     }
+    button {
+      margin-left: 10px;
+    }
+
   }
-  .section2-box2 {
-    padding: 20px;
-    margin-top: 20px;
-    div {
-      width: 100%;
-    }
-    h2 {
-      font-size: 1.2rem;
-    }
-    img {
-      width: 100%;
-    }
-    p {
-      padding-top: 20px;
-      font-size: 0.9rem;
-      line-height: 1.3rem;
-      color: $darkblueColor;
-    }
+  .EventM {
+    font-size: 0.6rem;
+    width: 90%;
+    display: block;
   }
 }
 
 footer {
-  margin-top: 20px;
-  padding-top: 20px;
-  .footer-content {
-   flex-direction: column;
-    width: 100%;
-    padding-bottom: 20px;
-    .contact {
-      color: $darkblueColor;
-      line-height: 1.5rem;
-      padding-top: 10px;
-      h3 {
-        font-size: 1.2rem;
-        font-weight: 500;
-      }
-
-      a {
-        text-decoration: none;
-        :hover {
-          opacity: 80%;
-        }
-        i {
-          color: $darkblueColor;
-          font-size: 1.2rem;
-          padding-right: 5px;
-        }
-      }
+  height: 7vh;
+  padding-top: 10px;
+  //width: 100vw;
+  //box-shadow: 0px -5px 20px rgba(50, 50, 50, 0.08);
+  .footer {
+    flex-direction: column;
+    font-style: italic;
+    color: $whiteColor;
+    span {
+      padding-top: 5px;
+      font-size: 0.8rem;
     }
-    .slowa {
-
-      width: 100%;
-      text-align: center;
-      padding-top: 10px;
-      li {
-        list-style: none;
-        font-size: 0.7rem;
-        color: $blueColor;
-      }
-    }
-    .stopka {
-      text-align: center;
-      width:100%;
-      img {
-        width: 10rem;
-      }
-    }
-  }
-  .copyright {
-    text-align: center;
-    color: white;
-    background-color: black;
-    padding: 4px;
   }
 }
 

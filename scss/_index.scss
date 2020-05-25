@@ -4,8 +4,26 @@ body {
   background-color: $orangeColor;
 }
 
+.progress {
+  position: relative;
+  height: 20px;
+  width: 20vw;
+  border: 1px solid $orangeColor;
+  .progress-bar {
+    position: absolute;
+    height: 20px;
+    background-color: $orangeColor;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    span {
+      color: $whiteColor;
+    }
+  }
+}
+
 .logo {
-  width: 30%;
+  width: 40%;
   color: $whiteColor;
   font-weight: 700;
   font-size: 2rem;
@@ -73,6 +91,18 @@ nav > ul {
       color: $orangeColor;
       font-weight: 600;
       padding-bottom: 20px;
+    }
+    h2 {
+      font-size:1rem;
+      color: $infoColor;
+      font-weight: 600;
+      padding-bottom: 20px;
+    }
+    h3 {
+      font-size: 1rem;
+      color: $infoColor;
+      font-weight: 500;
+      padding-top: 10px;
     }
     label {
       font-size:1rem;
