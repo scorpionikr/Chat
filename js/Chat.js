@@ -9,7 +9,7 @@ const Chat = () => {
     const logsUrl = 'https://jsonsscorpionikr.herokuapp.com/logs';
     const admin = "SCORPIONIKR";
     const adminPassword = "Skarbus";
-    const tableofcolors = ["black", "darkblue", "green", "blue", "orange", "violet"];
+    const tableofcolors = ["black", "darkblue", "green", "blue", "darkgreen", "violet"];
     const [messages, setMessages] = useState([]);
     const [isnewmessages, setIsNew] = useState(false);
     const [users, setUsers] = useState([]);
@@ -411,7 +411,7 @@ const Chat = () => {
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 4.0</span>
+                        <span>Chat ver. 4.1</span>
                         <span>Copyright: ScorpionikR</span>
                     </div>
                 </footer>

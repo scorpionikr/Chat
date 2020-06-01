@@ -9,7 +9,7 @@ const LoadingChat = (props) =>  {
      const fetchUsers = () => {
         fetch(usersUrl)
             .then(response => response.json())
-            .then(response => console.log("ladowanie users"))
+            .then(response => console.log("ladowanie bazy..."))
     };
 
     const handleLoad = () => {
@@ -22,9 +22,10 @@ const LoadingChat = (props) =>  {
         const timerId = setInterval(() => {
             if (Newwidth <100) {
                 setNewwidth(prevstate => prevstate + 1);
-                        console.log("leci")
+
             }
         }, 50)
+        fetchUsers();
         return() => {  clearInterval(timerId); }
     }, []);
 
