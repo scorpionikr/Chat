@@ -22,10 +22,10 @@ const LoadingChat = (props) =>  {
         const timerId = setInterval(() => {
             if (Newwidth <100) {
                 setNewwidth(prevstate => prevstate + 1);
-
+                fetchUsers();
             }
         }, 50)
-        fetchUsers();
+
         return() => {  clearInterval(timerId); }
     }, []);
 
@@ -34,6 +34,7 @@ const LoadingChat = (props) =>  {
     }
 
      return (
+         <>
          <div className="loginPage container pr-30 pl-30">
              <div className="loginForm">
                  <h1>CHAT</h1>
@@ -43,6 +44,10 @@ const LoadingChat = (props) =>  {
                  </div>
              </div>
          </div>
+         <footer>
+                 <p className="copyright">Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></p>
+         </footer>
+         </>
      )
 }
 

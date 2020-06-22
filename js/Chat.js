@@ -14,7 +14,7 @@ const Chat = () => {
     const [isnewmessages, setIsNew] = useState(false);
     const [users, setUsers] = useState([]);
     const [errors, setErrors] = useState([]);
-    const [eventMessage, setEventMessage] = useState([]);
+    const [eventMessage, setEventMessage] = useState(["Logs"]);
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
     const [logged, setLogged] = useState(false);
@@ -119,7 +119,6 @@ const Chat = () => {
                 return response.json()
             }
         }).then(dataNew => {
-            console.log(dataNew);
             setMessages(prevtable => [...prevtable, dataNew]);
             liRref.current.scrollIntoView({ behavior: 'smooth' });
         })
@@ -129,7 +128,6 @@ const Chat = () => {
     }
 
     const handleSubmit = (e) => {
-        console.log(messages)
         e.preventDefault();
         if (newMessage.length >0) {
             addMessage();
@@ -217,7 +215,6 @@ const Chat = () => {
                 return response.json()
             }
         }).then(dataNew => {
-            console.log(dataNew);
             setUsers(prevtable => [...prevtable, dataNew]);
         })
             .catch(error => {
@@ -241,7 +238,6 @@ const Chat = () => {
                 return response.json()
             }
         }).then(dataNew => {
-            console.log(dataNew);
             setEventMessage(prevtable => [...prevtable, dataNew]);
         })
             .catch(error => {
@@ -313,7 +309,7 @@ const Chat = () => {
                         return message.id !== messageId;
                     })
                 })
-                addLogs('Admin usunął tą wiadomość!')
+                addLogs('Admin usunął wiadomość!')
             }
         })
     }
@@ -326,6 +322,7 @@ const Chat = () => {
         )
     } else  if (logged === false)  {
         return (
+            <>
             <div className="loginPage container pr-30 pl-30">
                 <form className="loginForm" onSubmit={handleLogin}>
                     <h1>CHAT</h1>
@@ -341,6 +338,10 @@ const Chat = () => {
                     {users.length == 0 ? <h3>Brak zalogowanych użytkowników!</h3> : <h3>Zalogowanych {users.length} użytkowników!</h3>}
                 </form>
             </div>
+            <footer>
+                <p className="copyright">Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></p>
+            </footer>
+            </>
         )
     } else {
         return (
@@ -412,7 +413,7 @@ const Chat = () => {
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
                         <span>Chat ver. 4.1</span>
-                        <span>Copyright: ScorpionikR</span>
+                        <span>Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></span>
                     </div>
                 </footer>
             </>
