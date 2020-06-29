@@ -19,14 +19,13 @@ const LoadingChat = (props) =>  {
     }
 
     useEffect(() => {
-        const timerId = setInterval(() => {
+        const timerId2 = setInterval(() => {
             if (Newwidth <100) {
                 setNewwidth(prevstate => prevstate + 1);
-                fetchUsers();
             }
         }, 50)
-
-        return() => {  clearInterval(timerId); }
+        fetchUsers();
+        return() => {  clearInterval(timerId2); }
     }, []);
 
     if (Newwidth == 100) {

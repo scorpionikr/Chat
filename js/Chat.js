@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import {useMediaQuery, useMediaQueries} from '@react-hook/media-query'
 import Clock from './Clock'
 import LoadingChat from './LoadingChat'
+import Login from "../files/login2.mp3";
+import logout from "../files/logout2.mp3";
+import alert from "../files/alert2.mp3";
 
 const Chat = () => {
     const chatUrl = 'https://jsonsscorpionikr.herokuapp.com/chat';
@@ -9,7 +12,7 @@ const Chat = () => {
     const logsUrl = 'https://jsonsscorpionikr.herokuapp.com/logs';
     const admin = "SCORPIONIKR";
     const adminPassword = "Skarbus";
-    const tableofcolors = ["black", "darkblue", "green", "blue", "darkgreen", "violet"];
+    const tableofcolors = ["black", "darkblue", "green", "blue", "darkgreen"];
     const [messages, setMessages] = useState([]);
     const [isnewmessages, setIsNew] = useState(false);
     const [users, setUsers] = useState([]);
@@ -26,10 +29,23 @@ const Chat = () => {
     const [IsUsers, setIsUsers] = useState(false);
     const loggedOutMessage = login.toUpperCase()+ ' Wylogowany przez Admin!'
     const liRref = useRef();
+    const LoginSound = new Audio(Login);
+    const LogoutSound = new Audio(logout);
+    const AlertSound = new Audio(alert);
+    //localstorage
+    let savedLogin = localStorage.getItem("savedLogin");
+
+
+
     const {matches, matchesAny, matchesAll} = useMediaQueries({
         screen: 'screen',
         width: '(min-width: 768px)'
     })
+
+    const playSound = audioFile => {
+        audioFile.play();
+    }
+
 
     //Czy strona zaladowana=======================================================
 
@@ -50,7 +66,7 @@ const Chat = () => {
         // setisMobile(false) narazie to nie dziala
     }
     const LogUOut = () => {
-        logOut(login.toLocaleUpperCase())
+        logOut(savedLogin.toLocaleUpperCase())
         setisMobile(false)
     }
 
@@ -58,14 +74,29 @@ const Chat = () => {
 
     useEffect(() => {
         const timerId = setInterval(() => {
+            // currentTime()
             fetchUsers();
             fetchMessages()
             fetchEvents()
             scrollToBottom()
         }, 1000)
-
+        CheckLocalStorage();
         return() => {  clearInterval(timerId);    }
     }, [logged]);
+
+    //sprawdzenie localstorage
+    const CheckLocalStorage = () => {
+        if (savedLogin != null) {
+            setLogged(true)
+            // let check = users.includes(savedLogin.toLocaleUpperCase())
+            // console.log(check)
+            // if (check) {
+            //
+            //     console.log("login istnieje!")
+            // }
+
+        }
+    }
 
     const scrollToBottom = () => {
         if (logged == true) {
@@ -88,7 +119,13 @@ const Chat = () => {
     const fetchEvents = () => {
         fetch(logsUrl)
             .then(response => response.json())
-            .then(response => setEventMessage(response))
+            .then(response => {
+                setEventMessage(response)
+                // console.log(response[response.length-1].time , eventMessage[eventMessage.length-1].time)
+                if (response[response.length-1].time != eventMessage[eventMessage.length-1].time && logged) {
+                   // playSound(AlertSound)
+                }
+            })
     };
 
     const changeMessage = e => {
@@ -103,9 +140,9 @@ const Chat = () => {
         const url = chatUrl;
         currentTime()
         const dataNew = {
-            name: login.toUpperCase(),
+            name: savedLogin.toUpperCase(),
             message: newMessage,
-            color: getUserColor(login.toUpperCase()),
+            color: getUserColor(savedLogin.toUpperCase()),
             time: date.toLocaleTimeString()
         }
         fetch(url,{
@@ -120,6 +157,7 @@ const Chat = () => {
             }
         }).then(dataNew => {
             setMessages(prevtable => [...prevtable, dataNew]);
+            addLogs(savedLogin.toUpperCase() + ' pisze na CHAT!')
             liRref.current.scrollIntoView({ behavior: 'smooth' });
         })
             .catch(error => {
@@ -166,8 +204,10 @@ const Chat = () => {
         if (validationErrors.length !== 0) {
             setErrors(validationErrors);
         } else {
+            localStorage.setItem('savedLogin', login);
             setLogged(true)
-            addUser();
+            addUser(login);
+            playSound(LoginSound);
             addLogs(login.toUpperCase() + ' zalogował się!')
             setErrors([])
         }
@@ -191,17 +231,17 @@ const Chat = () => {
         return validationErrors;
     }
 
-    const addUser = () => {
+    const addUser = (username) => {
         const url = usersUrl;
         let logincolor = ""
-        if (login.toLocaleUpperCase()== admin) {
+        if (username.toLocaleUpperCase()== admin) {
             logincolor = "red"
             setPassword("")
         } else {
             logincolor = colorrandom(tableofcolors)
         }
             const dataNew = {
-            name: login.toLocaleUpperCase(),
+            name: username.toLocaleUpperCase(),
             color: logincolor
         }
         fetch(url,{
@@ -215,17 +255,18 @@ const Chat = () => {
                 return response.json()
             }
         }).then(dataNew => {
-            setUsers(prevtable => [...prevtable, dataNew]);
+            // setUsers(prevtable => [...prevtable, dataNew]);
         })
             .catch(error => {
                 console.log(error);
-            });
+        });
     }
 
     const addLogs = (newMessage) => {
         const url = logsUrl;
         const dataNew = {
             message: newMessage,
+            time: date.toLocaleTimeString()
         }
         fetch(url,{
             method: "POST",
@@ -238,7 +279,7 @@ const Chat = () => {
                 return response.json()
             }
         }).then(dataNew => {
-            setEventMessage(prevtable => [...prevtable, dataNew]);
+            // setEventMessage(prevtable => [...prevtable, dataNew]);
         })
             .catch(error => {
                 console.log(error);
@@ -272,6 +313,8 @@ const Chat = () => {
             })
         userDel(userId);
         setLogged(false)
+        localStorage.removeItem('savedLogin');
+        playSound(LogoutSound);
         addLogs(username+ ' wylogował się!')
     }
 
@@ -280,7 +323,7 @@ const Chat = () => {
 
     const AdminUsunUser = (userId, username) => {
         userDel(userId);
-        addLogs(username+ ' Wylogowany przez Admin!')
+        addLogs(username+ ' Wylogowany przez ADMIN!')
         // setErrors(["Zostałeś wyrzucony z chat!"])
     }
 
@@ -295,7 +338,7 @@ const Chat = () => {
             })
         })
                 setMessages([])
-                addLogs('Admin wyczyścił chat!')
+                addLogs('ADMIN wyczyścił chat!')
     }
 
     const AdminUsunMessage = messageId => {
@@ -309,7 +352,7 @@ const Chat = () => {
                         return message.id !== messageId;
                     })
                 })
-                addLogs('Admin usunął wiadomość!')
+                addLogs('ADMIN usunął wiadomość!')
             }
         })
     }
@@ -320,7 +363,7 @@ const Chat = () => {
         return (
             <LoadingChat loaded={siteLoaded}/>
         )
-    } else  if (logged === false)  {
+    } else  if (logged === false && savedLogin == null)  {
         return (
             <>
             <div className="loginPage container pr-30 pl-30">
@@ -349,7 +392,7 @@ const Chat = () => {
             <header className="header">
                 <div className="header-content container pr-30 pl-30">
                     <div className="logo">Chat <Clock/></div>
-                    {login.toUpperCase() == admin ? <span className="Admin center">Witaj Admin!</span> : ""}
+                    {savedLogin.toUpperCase() == admin ? <span className="Admin center">Witaj Admin!</span> : ""}
                     <nav>
                         <div className="hamburger" >
                             <button >
@@ -357,8 +400,8 @@ const Chat = () => {
                             </button>
                         </div>
                         <ul className="list__navigation unvisible">
-                            <li onClick={() => logOut(login.toLocaleUpperCase())}>
-                                Wyloguj: {login.toLocaleUpperCase()}
+                            <li onClick={() => logOut(savedLogin.toLocaleUpperCase())}>
+                                Wyloguj: {savedLogin.toLocaleUpperCase()}
                             </li>
                         </ul>
                         <ul className={isMobile ? 'list__navigation navigation_mobile' : ' unvisible'}>
@@ -369,7 +412,7 @@ const Chat = () => {
                                 UŻYTKOWNICY
                             </li>
                             <li onClick={LogUOut}>
-                                WYLOGUJ: {login.toLocaleUpperCase()}
+                                WYLOGUJ: {savedLogin.toLocaleUpperCase()}
                             </li>
                         </ul>
                     </nav>
@@ -382,7 +425,7 @@ const Chat = () => {
                                 <ul >
                                     {messages.map((message) => {
                                         return (
-                                            <li ref={liRref} key={message.id} style={{color: message.color}}>{message.name.toLocaleUpperCase()} [{message.time}]: {message.message} {login.toUpperCase() == admin ? <button className="AdminButton" onClick={() => AdminUsunMessage(message.id)}>Usuń</button> : ""}</li>
+                                            <li ref={liRref} key={message.id} style={{color: message.color}}>{message.name.toLocaleUpperCase()} [{message.time}]: {message.message} {savedLogin.toUpperCase() == admin ? <button className="AdminButton" onClick={() => AdminUsunMessage(message.id)}>Usuń</button> : ""}</li>
                                         )
                                     })}
                                 </ul>
@@ -392,7 +435,7 @@ const Chat = () => {
                                 <ul>
                                     {users.map((user) => {
                                         return (
-                                            <li key={user.id} style={{color: user.color}}> {user.name} {login.toUpperCase() == admin && user.name != admin ? <button className="AdminButton" onClick={() => AdminUsunUser(user.id, user.name)}>Usuń</button> : ""}</li>
+                                            <li key={user.id} style={{color: user.color}}> {user.name} {savedLogin.toUpperCase() == admin && user.name != admin ? <button className="AdminButton" onClick={() => AdminUsunUser(user.id, user.name)}>Usuń</button> : ""}</li>
 
                                         )
                                     })}
@@ -404,7 +447,7 @@ const Chat = () => {
                                     <p className="unvisible">Twoja wiadomość:</p>
                                     <input type="text" name="message" value={newMessage} onChange={changeMessage}/>
                                     <button type="submit" className="btn-send">Wyślij</button>
-                                    {login.toUpperCase() == admin ? <button className="AdminButton" onClick={AdminClearChat}>Wyczyść</button> : ""}
+                                    {savedLogin.toUpperCase() == admin ? <button className="AdminButton" onClick={AdminClearChat}>Wyczyść</button> : ""}
                           </form>
                         {eventMessage[eventMessage.length-1].message == loggedOutMessage ? setLogged(false) :<div className="EventM center">{eventMessage[eventMessage.length-1].message}</div>}
                     </div>
@@ -412,7 +455,7 @@ const Chat = () => {
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 4.1</span>
+                        <span>Chat ver. 5.2</span>
                         <span>Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></span>
                     </div>
                 </footer>
