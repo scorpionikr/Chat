@@ -19,10 +19,10 @@
 }
 
 
-@media screen and (max-width: 768px){
-    .section1 .users{
-    display: none;
-    }
+@media screen and (min-width: 769px){
+  .section1 .users{
+    display: block;
+  }
 }
 
 .EventM {

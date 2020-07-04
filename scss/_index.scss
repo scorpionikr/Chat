@@ -56,6 +56,9 @@ nav > ul {
     font-style: italic;
     color: $whiteColor;
     cursor: pointer;
+    &:hover {
+      opacity: 80%;
+    }
     }
   }
 
@@ -119,6 +122,9 @@ nav > ul {
       border-radius: 8px;
       cursor: pointer;
       margin-top: 20px;
+      &:hover {
+        opacity: 80%;
+      }
     }
     .alert {
       color: red;
@@ -167,6 +173,9 @@ main {
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        &:hover {
+          opacity: 80%;
+        }
       }
     }
     span {
@@ -198,6 +207,9 @@ main {
         border: none;
         border-radius: 8px;
         cursor: pointer;
+        &:hover {
+          opacity: 80%;
+        }
       }
     }
   }
@@ -235,6 +247,9 @@ main {
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      &:hover {
+        opacity: 80%;
+      }
     }
 
   }

@@ -6,6 +6,7 @@ import Login from "../files/login2.mp3";
 import logout from "../files/logout2.mp3";
 import alert from "../files/alert2.mp3";
 
+
 const Chat = () => {
     const chatUrl = 'https://jsonsscorpionikr.herokuapp.com/chat';
     const usersUrl = 'https://jsonsscorpionikr.herokuapp.com/users';
@@ -14,7 +15,6 @@ const Chat = () => {
     const adminPassword = "Skarbus";
     const tableofcolors = ["black", "darkblue", "green", "blue", "darkgreen"];
     const [messages, setMessages] = useState([]);
-    const [isnewmessages, setIsNew] = useState(false);
     const [users, setUsers] = useState([]);
     const [errors, setErrors] = useState([]);
     const [eventMessage, setEventMessage] = useState(["Logs"]);
@@ -27,25 +27,19 @@ const Chat = () => {
     const [isMobile, setisMobile] = useState(false);
     const [Issmessages, setIssmessages] = useState(true);
     const [IsUsers, setIsUsers] = useState(false);
-    const loggedOutMessage = login.toUpperCase()+ ' Wylogowany przez Admin!'
     const liRref = useRef();
     const LoginSound = new Audio(Login);
     const LogoutSound = new Audio(logout);
     const AlertSound = new Audio(alert);
     //localstorage
     let savedLogin = localStorage.getItem("savedLogin");
+    const loggedOutMessage = login.toUpperCase()+ ' Wylogowany przez ADMIN!'
 
-
-
-    const {matches, matchesAny, matchesAll} = useMediaQueries({
-        screen: 'screen',
-        width: '(min-width: 768px)'
-    })
+    //Sounds
 
     const playSound = audioFile => {
         audioFile.play();
     }
-
 
     //Czy strona zaladowana=======================================================
 
@@ -53,7 +47,12 @@ const Chat = () => {
         setloaded(true)
     }
 
-    // Do uzycia przy kodzie MOBILE=================================================
+    // MOBILE=================================================
+
+    const {matches, matchesAny, matchesAll} = useMediaQueries({
+        screen: 'screen',
+        width: '(min-width: 768px)'
+    })
 
     const ViewMessage = () => {
         setIssmessages(true)
@@ -61,12 +60,8 @@ const Chat = () => {
         setisMobile(false)
     }
     const ViewUsers = () => {
-        // setIssmessages(false)
-        // setIsUsers(true)
-        // setisMobile(false) narazie to nie dziala
-    }
-    const LogUOut = () => {
-        logOut(savedLogin.toLocaleUpperCase())
+        setIssmessages(false)
+        setIsUsers(true)
         setisMobile(false)
     }
 
@@ -82,19 +77,19 @@ const Chat = () => {
         }, 1000)
         CheckLocalStorage();
         return() => {  clearInterval(timerId);    }
-    }, [logged]);
+    }, [logged, eventMessage]);
 
     //sprawdzenie localstorage
     const CheckLocalStorage = () => {
         if (savedLogin != null) {
             setLogged(true)
+            setLogin(savedLogin)
             // let check = users.includes(savedLogin.toLocaleUpperCase())
             // console.log(check)
+            // console.log(users)
             // if (check) {
-            //
             //     console.log("login istnieje!")
             // }
-
         }
     }
 
@@ -121,9 +116,8 @@ const Chat = () => {
             .then(response => response.json())
             .then(response => {
                 setEventMessage(response)
-                // console.log(response[response.length-1].time , eventMessage[eventMessage.length-1].time)
                 if (response[response.length-1].time != eventMessage[eventMessage.length-1].time && logged) {
-                   // playSound(AlertSound)
+                    playSound(AlertSound)
                 }
             })
     };
@@ -315,16 +309,14 @@ const Chat = () => {
         setLogged(false)
         localStorage.removeItem('savedLogin');
         playSound(LogoutSound);
-        addLogs(username+ ' wylogował się!')
+        addLogs(username.toUpperCase()+ ' wylogował się!')
     }
-
 
     //Funkcje administracyjne ======================================================
 
     const AdminUsunUser = (userId, username) => {
         userDel(userId);
         addLogs(username+ ' Wylogowany przez ADMIN!')
-        // setErrors(["Zostałeś wyrzucony z chat!"])
     }
 
     const AdminClearChat = () => {
@@ -337,8 +329,8 @@ const Chat = () => {
 
             })
         })
-                setMessages([])
-                addLogs('ADMIN wyczyścił chat!')
+        setMessages([])
+        addLogs('ADMIN wyczyścił chat!')
     }
 
     const AdminUsunMessage = messageId => {
@@ -363,7 +355,7 @@ const Chat = () => {
         return (
             <LoadingChat loaded={siteLoaded}/>
         )
-    } else  if (logged === false && savedLogin == null)  {
+    } else  if (logged === false && savedLogin === null)  {
         return (
             <>
             <div className="loginPage container pr-30 pl-30">
@@ -372,11 +364,12 @@ const Chat = () => {
                     <label>Podaj swoje imię:</label>
                     <input type="text" name="login" value={login} onChange={handleLoginChange} />
                     {login.toUpperCase() == admin ? <input type="password" name="password" value={password} onChange={handlePasswordChange} />: ""}
-                    <button type="submit">Zaloguj!</button>
+                    <button type="submit">Zaloguj</button>
                     <ul className="alert">
                         {errors.map((error, index) => {
                             return <li key={index}>{error}</li>
                         })}
+
                     </ul>
                     {users.length == 0 ? <h3>Brak zalogowanych użytkowników!</h3> : <h3>Zalogowanych {users.length} użytkowników!</h3>}
                 </form>
@@ -411,7 +404,7 @@ const Chat = () => {
                             <li onClick={ViewUsers}>
                                 UŻYTKOWNICY
                             </li>
-                            <li onClick={LogUOut}>
+                            <li onClick={() => logOut(savedLogin.toLocaleUpperCase())}>
                                 WYLOGUJ: {savedLogin.toLocaleUpperCase()}
                             </li>
                         </ul>
@@ -430,18 +423,19 @@ const Chat = () => {
                                     })}
                                 </ul>
                             </div>
-                            <div className={ matches.screen ? 'users center' : ' unvisible'}>
+                            <div className={IsUsers ? 'users center visible' : 'users center unvisible'}>
                                 Użytkownicy:
                                 <ul>
                                     {users.map((user) => {
                                         return (
                                             <li key={user.id} style={{color: user.color}}> {user.name} {savedLogin.toUpperCase() == admin && user.name != admin ? <button className="AdminButton" onClick={() => AdminUsunUser(user.id, user.name)}>Usuń</button> : ""}</li>
-
                                         )
                                     })}
                                 </ul>
                             </div>
+
                     </div>
+
                     <div className="section2 pr-30 pl-30 pt-10 pb-10">
                           <form className="sendForm" onSubmit={handleSubmit}>
                                     <p className="unvisible">Twoja wiadomość:</p>
@@ -449,13 +443,13 @@ const Chat = () => {
                                     <button type="submit" className="btn-send">Wyślij</button>
                                     {savedLogin.toUpperCase() == admin ? <button className="AdminButton" onClick={AdminClearChat}>Wyczyść</button> : ""}
                           </form>
-                        {eventMessage[eventMessage.length-1].message == loggedOutMessage ? setLogged(false) :<div className="EventM center">{eventMessage[eventMessage.length-1].message}</div>}
+                        {eventMessage[eventMessage.length-1].message == loggedOutMessage ? logOut(savedLogin) : <div className="EventM center">{eventMessage[eventMessage.length-1].message}</div>}
                     </div>
                 </main>
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 5.2</span>
+                        <span>Chat ver. 5.3</span>
                         <span>Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></span>
                     </div>
                 </footer>
