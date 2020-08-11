@@ -116,7 +116,7 @@ const Chat = () => {
             .then(response => response.json())
             .then(response => {
                 setEventMessage(response)
-                if (response[response.length-1].time != eventMessage[eventMessage.length-1].time && logged) {
+                if (response[response.length-1].time != eventMessage[eventMessage.length-1].time && logged && response[response.length-1].message.includes(login.toLocaleUpperCase())== false) {
                     playSound(AlertSound)
                 }
             })
@@ -449,7 +449,7 @@ const Chat = () => {
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 5.3</span>
+                        <span>Chat ver. 5.4</span>
                         <span>Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></span>
                     </div>
                 </footer>
