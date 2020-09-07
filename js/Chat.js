@@ -309,6 +309,7 @@ const Chat = () => {
         setLogged(false)
         localStorage.removeItem('savedLogin');
         playSound(LogoutSound);
+        setisMobile(false);
         addLogs(username.toUpperCase()+ ' wylogował się!')
     }
 
@@ -388,9 +389,7 @@ const Chat = () => {
                     {savedLogin.toUpperCase() == admin ? <span className="Admin center">Witaj Admin!</span> : ""}
                     <nav>
                         <div className="hamburger" >
-                            <button >
-                                <i className="fas fa-bars" onClick={() => setisMobile(!isMobile)}></i>
-                            </button>
+                            <i className="fas fa-bars" onClick={() => setisMobile(!isMobile)}></i>
                         </div>
                         <ul className="list__navigation unvisible">
                             <li onClick={() => logOut(savedLogin.toLocaleUpperCase())}>
@@ -449,7 +448,7 @@ const Chat = () => {
 
                 <footer>
                     <div className="footer container pr-30 pl-30 pt-10">
-                        <span>Chat ver. 5.4</span>
+                        <span>Chat ver. 5.5</span>
                         <span>Copyright: <a href="https://www.solskar.pl" target="_blank">SolSkar</a></span>
                     </div>
                 </footer>
